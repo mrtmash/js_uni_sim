@@ -14,6 +14,7 @@ const mouse = {
 }
 const atoms = [];
 const acc = 0.1;
+var play = false;
 
 class Atom {
   constructor() {
@@ -39,11 +40,10 @@ canvas.addEventListener('click', (data) => {
   mouse.x = data.x;
   mouse.y = data.y;
   atoms.push(new Atom);
-  /*
+  uni.clearRect(0, 0, canvas.width, canvas.height);
   for (var a = 0; a < atoms.length; a++) {
     atoms[a].show();
   }
-  */
 });
 
 function atomHandler() {
@@ -74,15 +74,18 @@ function atomHandler() {
 }
 
 function animate() {
-  uni.clearRect(0, 0, canvas.width, canvas.height);
-  atomHandler();
-  requestAnimationFrame(animate);
+  if (play) {
+    uni.clearRect(0, 0, canvas.width, canvas.height);
+    atomHandler();
+    requestAnimationFrame(animate);
+  }
 }
 
-animate();
-/*
 window.addEventListener('keypress', (event) => {
-  animate();
-  //atomHandler();
+  if (!play) {
+    play = true;
+    animate();
+  } else {
+    play = false;
+  }
 });
-*/
